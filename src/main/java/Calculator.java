@@ -8,17 +8,23 @@ public class Calculator {
     public static float calc() {
         while (true) {
             Scanner scanner = new Scanner(System.in);
+            scanner.useLocale(Locale.US);
             System.out.println("Введите название блюда: ");
             String blyudo = scanner.next();
             summablyud += blyudo + "\n";
             float stoimost;
             while (true) {
-                Scanner scan = new Scanner(System.in);
-                scan.useLocale(Locale.US);
                 System.out.println("Введите стоимость блюда в формате 'рубли.копейки' : ");
-                if (scan.hasNextFloat()) {
-                    stoimost = scan.nextFloat();
+                if (scanner.hasNextFloat()) {
+                    stoimost = scanner.nextFloat();
+                    if (stoimost < 0) {
+                        continue;
+                    } else {
                         break;
+                    }
+                } else {
+                    scanner.next();
+                    continue;
                 }
             }
             System.out.println("Блюдо '" + blyudo + "' удачно добавлено!");
@@ -37,11 +43,13 @@ public class Calculator {
     }
 
     public static String rubles(double a) {
-        if (a % 100 >= 5 && a % 100 <= 20) {
+        double b = a % 100;
+        double c = a % 10;
+        if (b >= 11 && b <= 14) {
             return "рублей";
-        } else if (a % 10 == 1) {
+        } else if (c == 1) {
             return "рубль";
-        } else if (a % 10 >= 2 && a % 10 <= 4) {
+        } else if (c >= 2 && c <= 4) {
             return "рубля";
         } else {
             return "рублей";
